@@ -10,7 +10,6 @@
     <Folder Include="Core\Resource\" />
     <Folder Include="Core\Repository\" />
     <Folder Include="Infrastructure\" />
-    <Folder Include="Views\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
