@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProxyFairy.Core.Model
 {
@@ -8,5 +9,7 @@ namespace ProxyFairy.Core.Model
 
         public Guid ProductOwnerId { get; set; }
         public virtual AppUser ProductOwner { get; set; }
+
+        public virtual ICollection<MobApp> MobApps { get; set; }
     }
 }
