@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProxyFairy.Core.Model;
+using ProxyFairy.Infrastructure;
 
 namespace ProxyFairy
 {
@@ -16,6 +17,8 @@ namespace ProxyFairy
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration["Data:ProxyFairyIdentity:ConnectionString"]));
 
