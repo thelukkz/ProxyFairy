@@ -2,7 +2,7 @@
 
 namespace ProxyFairy.ViewModels.Admin
 {
-    public class CreateModel
+    public class CreateUserModel
     {
         [Required]
         public string Name { get; set; }

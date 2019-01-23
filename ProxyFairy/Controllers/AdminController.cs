@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProxyFairy.Core.Model;
 using ProxyFairy.ViewModels.Admin;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ProxyFairy.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private UserManager<AppUser> _userManager;
@@ -35,7 +37,7 @@ namespace ProxyFairy.Controllers
         public ViewResult CreateUser() => View();
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateModel model)
+        public async Task<IActionResult> CreateUser(CreateUserModel model)
         {
             if (ModelState.IsValid)
             {
