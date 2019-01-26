@@ -5,6 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProxyFairy.Core.Model;
+using ProxyFairy.Infrastructure;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProxyFairy
 {
@@ -16,6 +20,8 @@ namespace ProxyFairy
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration["Data:ProxyFairyIdentity:ConnectionString"]));
 
@@ -37,6 +43,9 @@ namespace ProxyFairy
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+
+            AppIdentityDbContext.CreateSystemRoles(app.ApplicationServices, Configuration).Wait();
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
