@@ -22,9 +22,14 @@
                         <button type="submit" class=" btn btn-sm btn-danger">Delete</button>
                     </form>
                 </td>
+                <td>
+                    <form asp-action="PromoteToAdmin" asp-route-id="@user.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-success">Promote to admin</button>
+                     </form>
+                </td>
             </tr>
         }
     }
 </table>
 
-<a class="btn btn-primary" asp-action="CreateUser">Dodaj użytkownika</a>
+<a class="btn btn-primary" asp-action="CreateUser">Create user</a>

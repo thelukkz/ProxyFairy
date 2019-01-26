@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ProxyFairy.Core.Model;
 using ProxyFairy.ViewModels.Admin;
 using System;
@@ -17,16 +18,19 @@ namespace ProxyFairy.Controllers
         private IUserValidator<AppUser> _userValidator;
         private IPasswordValidator<AppUser> _passwordValidator;
         private IPasswordHasher<AppUser> _passwordHasher;
+        private IConfiguration _configuration;
 
         public AdminController(UserManager<AppUser> userManager,
             IUserValidator<AppUser> userValidator,
             IPasswordValidator<AppUser> passwordValidator,
-            IPasswordHasher<AppUser> passwordHasher)
+            IPasswordHasher<AppUser> passwordHasher,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _userValidator = userValidator;
             _passwordValidator = passwordValidator;
             _passwordHasher = passwordHasher;
+            _configuration = configuration;
         }
         public ViewResult Index() => View();
 
@@ -35,6 +39,9 @@ namespace ProxyFairy.Controllers
         public ViewResult Users() => View(_userManager.Users);
 
         public ViewResult CreateUser() => View();
+        //{
+        //    return View(new CreateUserModel());
+        //}
 
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserModel model)
@@ -50,6 +57,8 @@ namespace ProxyFairy.Controllers
 
                 if (result.Succeeded)
                 {
+                    var userRole = _configuration["Data:SystemRoles:User"];
+                    await _userManager.AddToRoleAsync(user, userRole);
                     return RedirectToAction("Users");
                 }
                 else
@@ -78,6 +87,22 @@ namespace ProxyFairy.Controllers
                 ModelState.AddModelError("", "User not found");
             }
             return View("Users");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PromoteToAdmin(string id)
+        {
+            AppUser user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                var adminRole = _configuration["Data:SystemRoles:Administrator"];
+                await _userManager.AddToRoleAsync(user, adminRole);
+            }
+            else
+            {
+                ModelState.AddModelError("", "User not found");
+            }
+            return RedirectToAction("Users");
         }
 
         public async Task<IActionResult> EditUser(string id)
