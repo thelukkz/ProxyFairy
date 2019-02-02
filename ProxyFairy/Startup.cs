@@ -11,6 +11,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using ProxyFairy.Core.Repository.Abstract;
 using ProxyFairy.Core.Repository.Concrete;
+using ProxyFairy.Core.Service.Abstract;
+using ProxyFairy.Core.Service.Concrete;
 
 namespace ProxyFairy
 {
@@ -23,7 +25,12 @@ namespace ProxyFairy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
-            services.AddTransient<IDbFactory, DbFactory>();
+
+            services.AddScoped<IDbFactory, DbFactory>();
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICustomerManager, CustomerManager>();
+
 
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration["Data:ProxyFairyIdentity:ConnectionString"]));
