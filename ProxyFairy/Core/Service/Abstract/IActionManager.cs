@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ProxyFairy.Core.Model;
 using ProxyFairy.Core.Repository.Abstract;
 
@@ -12,5 +13,6 @@ namespace ProxyFairy.Core.Service.Abstract
         IEnumerable<BaseEntity> GetAll();
         IUnitOfWork UnitOfWork { get; }
         void SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

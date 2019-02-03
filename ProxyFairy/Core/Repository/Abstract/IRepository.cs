@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ProxyFairy.Core.Repository.Abstract
 {
@@ -18,8 +19,14 @@ namespace ProxyFairy.Core.Repository.Abstract
         IEnumerable<T> Filter<T>(Expression<Func<T, bool>> predicate) where T : class;
         IEnumerable<T> Filter<T>(Expression<Func<T, bool>> filter, out int total, int index = 0, int size = 50) where T : class;
         T Find<T>(Expression<Func<T, bool>> predicate) where T : class;
+        Task<T> FindAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
         T Single<T>(Expression<Func<T, bool>> expression) where T : class;
+        Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class;
 
         bool Contains<T>(Expression<Func<T, bool>> predicate) where T : class;
+        Task<bool> ContainsAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        long Count<T>(Expression<Func<T, bool>> predicate) where T : class;
+        Task<long> CountAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
     }
 }

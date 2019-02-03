@@ -54,5 +54,10 @@ namespace ProxyFairy.Core.Service.Concrete
             AppParameter parameter = (AppParameter)entity;
             _repository.Update<AppParameter>(parameter);
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _unitOfWork.SaveChangesAsync();
+        }
     }
 }

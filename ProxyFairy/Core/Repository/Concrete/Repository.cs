@@ -83,14 +83,39 @@ namespace ProxyFairy.Core.Repository.Concrete
             return _context.Set<T>().FirstOrDefault<T>(predicate);
         }
 
+        public async Task<T> FindAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync<T>(predicate);
+        }
+
         public T Single<T>(Expression<Func<T, bool>> expression) where T : class
         {
             return All<T>().FirstOrDefault(expression);
         }
 
+        public async Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class
+        {
+            return await All<T>().FirstOrDefaultAsync(expression);
+        }
+
         public bool Contains<T>(Expression<Func<T, bool>> predicate) where T : class
         {
             return _context.Set<T>().Count<T>(predicate) > 0;
+        }
+
+        public async Task<bool> ContainsAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return await _context.Set<T>().LongCountAsync<T>(predicate) > 0;
+        }
+
+        public long Count<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return _context.Set<T>().LongCount<T>(predicate);
+        }
+
+        public async Task<long> CountAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return await _context.Set<T>().LongCountAsync<T>(predicate);
         }
     }
 }

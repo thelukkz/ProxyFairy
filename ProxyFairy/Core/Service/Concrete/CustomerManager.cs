@@ -55,5 +55,10 @@ namespace ProxyFairy.Core.Service.Concrete
             _repository.Update<Customer>(customer);
             SaveChanges();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _unitOfWork.SaveChangesAsync();
+        }
     }
 }

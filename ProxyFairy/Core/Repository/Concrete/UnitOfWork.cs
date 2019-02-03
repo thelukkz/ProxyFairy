@@ -34,5 +34,10 @@ namespace ProxyFairy.Core.Repository.Concrete
         {
             _dbFactory.GetDataContext.SaveChanges();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _dbFactory.GetDataContext.SaveChangesAsync();
+        }
     }
 }
