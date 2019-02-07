@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProxyFairy.Core.Service.Abstract;
+using ProxyFairy.ViewModels.Customer;
 
 namespace ProxyFairy.Controllers
 {
@@ -16,14 +17,26 @@ namespace ProxyFairy.Controllers
             _manager = manager;
         }
 
-        public ViewResult Index()
+        public async Task<ViewResult> Index()
         {
-            var all = _manager.GetAll();
-            _manager.Create(new Core.Model.Customer { Name = "testowy" });
-            _manager.SaveChanges();
-            all = _manager.GetAll();
+            var customersDto = await _manager.GetAllCustomersAsync();
+            var model = customersDto.Select(x => new CustomerViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                DroidAppsCount = x.DroidAppsCount,
+                IosAppsCount = x.IosAppsCount,
+                ActiveSlotsCount = x.ActiveSlotsCount,
+                ProducOwner = new ViewModels.Account.ProductOwnerViewModel
+                {
+                    Id = x.ProductOwner.Id,
+                    FullName = x.ProductOwner.FullName
+                }
+            }).ToList();
 
-            return View();
+            return View(model);
         }
+
+        public ViewResult CreateCustomer() => View(new CreateCustomerViewModel());
     }
 }

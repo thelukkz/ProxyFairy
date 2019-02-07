@@ -8,7 +8,7 @@ using ProxyFairy.Core.Service.Abstract;
 
 namespace ProxyFairy.Core.Service.Concrete
 {
-    public class AppParameterManager : BusinessManager, ICustomerManager
+    public class AppParameterManager : BusinessManager, IAppParameterManager
     {
         IRepository _repository;
         IUnitOfWork _unitOfWork;
