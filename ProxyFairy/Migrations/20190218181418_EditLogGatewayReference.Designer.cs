@@ -12,9 +12,10 @@ using System;
 namespace ProxyFairy.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190218181418_EditLogGatewayReference")]
+    partial class EditLogGatewayReference
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -348,9 +349,6 @@ namespace ProxyFairy.Migrations
                     b.Property<long>("CustomerId");
 
                     b.Property<bool>("Deleted");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
 
                     b.Property<int>("Platform");
 
