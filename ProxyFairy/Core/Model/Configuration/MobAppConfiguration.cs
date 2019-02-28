@@ -13,6 +13,7 @@ namespace ProxyFairy.Core.Model.Configuration
             builder.Property(x => x.CreatedOn).HasColumnType("datetime2");
             builder.Property(x => x.UpdatedOn).HasColumnType("datetime2");
 
+            builder.Property(x => x.Name).HasMaxLength(128);
             builder.Property(x => x.AppBundle).HasMaxLength(50);
 
             builder.Property(x => x.CustomerId).IsRequired();

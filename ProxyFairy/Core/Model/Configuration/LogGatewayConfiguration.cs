@@ -21,6 +21,8 @@ namespace ProxyFairy.Core.Model.Configuration
             builder.Property(x => x.System).HasMaxLength(16);
             builder.Property(x => x.SystemVersion).HasMaxLength(32);
 
+            builder.HasOne(x => x.MobApp).WithMany(x => x.LogGateways);
+
             builder.HasIndex(x => x.ContractId);
             builder.HasIndex(x => x.Level);
             builder.HasIndex(x => x.Response);
