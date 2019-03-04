@@ -1,11 +1,18 @@
 ﻿@model CreateCustomerViewModel
+@addTagHelper ProxyFairy.Infrastructure.TagHelpers.SelectUserTagHelper, ProxyFairy
 
 <div class="bg-primary m-1 p-1 text-white"><h4>Create new customer</h4></div>
 <div asp-validation-summary=" All" class="text-danger"></div>
-<form asp-action="CreateCustomer" method="post">
+<form asp-action="CreateCustomer" method="post" asp-antiforgery="true">
     <div class="form-group">
         <label asp-for="Name">Customer name</label>
         <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ProductOwnerId"></label>
+        <select class="form-control" model-for="ProductOwnerId">
+            <option disabled selected value="">Wybierz PO</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
