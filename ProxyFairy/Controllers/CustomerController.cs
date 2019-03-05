@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProxyFairy.Core.Model;
 using ProxyFairy.Core.Service.Abstract;
 using ProxyFairy.ViewModels.Customer;
 
@@ -38,5 +39,23 @@ namespace ProxyFairy.Controllers
         }
 
         public ViewResult CreateCustomer() => View(new CreateCustomerViewModel());
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCustomer(CreateCustomerViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var productOwner = await _manager.GetProductOwnerAsync(model.ProductOwnerId);
+
+                _manager.Create(new Customer
+                {
+                    ProductOwner = productOwner,
+                    Name = model.Name
+                });
+                await _manager.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

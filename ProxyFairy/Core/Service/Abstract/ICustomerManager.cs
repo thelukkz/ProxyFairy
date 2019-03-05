@@ -8,5 +8,6 @@ namespace ProxyFairy.Core.Service.Abstract
     public interface ICustomerManager : IActionManager
     {
         Task<List<OutCustomerDto>> GetAllCustomersAsync();
+        Task<AppUser> GetProductOwnerAsync(string userId);
     }
 }

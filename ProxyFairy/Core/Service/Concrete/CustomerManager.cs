@@ -88,5 +88,11 @@ namespace ProxyFairy.Core.Service.Concrete
 
             return result;
         }
+
+        public async Task<AppUser> GetProductOwnerAsync(string userId)
+        {
+            var result = await _repository.SingleAsync<AppUser>(x => x.Id == userId);
+            return result;
+        }
     }
 }
