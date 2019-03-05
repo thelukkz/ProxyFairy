@@ -9,5 +9,6 @@ namespace ProxyFairy.Core.Service.Abstract
     {
         Task<List<OutCustomerDto>> GetAllCustomersAsync();
         Task<AppUser> GetProductOwnerAsync(string userId);
+        Task<OutCustomerDto> GetCustomerAsync(long id);
     }
 }

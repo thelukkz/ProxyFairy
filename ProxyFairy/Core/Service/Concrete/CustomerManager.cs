@@ -89,6 +89,30 @@ namespace ProxyFairy.Core.Service.Concrete
             return result;
         }
 
+        public async Task<OutCustomerDto> GetCustomerAsync(long id)
+        {
+            var dto = await _repository.All<Customer>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (dto == null) return new OutCustomerDto();
+
+            //TODO: refactor, add mappings
+            var result = new OutCustomerDto
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                ProductOwner = new ProductOwnerDto
+                {
+                    Id = dto.ProductOwner != null ? dto.ProductOwner.Id : null,
+                    FullName = dto.ProductOwner != null ? dto.ProductOwner.UserName : null
+                },
+                //TODO: add missing counters
+            };
+
+            return result;
+        }
+
         public async Task<AppUser> GetProductOwnerAsync(string userId)
         {
             var result = await _repository.SingleAsync<AppUser>(x => x.Id == userId);

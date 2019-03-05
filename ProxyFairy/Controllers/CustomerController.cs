@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProxyFairy.Core.Model;
 using ProxyFairy.Core.Service.Abstract;
 using ProxyFairy.ViewModels.Customer;
@@ -56,6 +57,24 @@ namespace ProxyFairy.Controllers
                 await _manager.SaveChangesAsync();
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> EditCustomer(long id)
+        {
+            var dto = await _manager.GetCustomerAsync(id);
+            if (string.IsNullOrEmpty(dto.Name)) return RedirectToAction("Index");
+
+            EditCustomerViewModel customerModel = new EditCustomerViewModel
+            {
+                Name = dto.Name,
+                ProductOwnerId = dto?.ProductOwner?.Id ?? string.Empty
+            };
+
+            //TODO: get all product owners and put into view bag
+
+            ViewBag.ProductOwners = SelectList()
+
+            return View(customerModel);
         }
     }
 }

@@ -9,7 +9,8 @@
     <th>Droid apps</th>
     <th>iOS apps</th>
     <th>Active slots</th>
-    <th>PO</th></tr>
+    <th>PO</th>
+    <th></th></tr>
     @if (Model.Count() == 0)
     {
         <tr><td colspan="3" class="text-center">No customers.</td></tr>
@@ -25,6 +26,7 @@
                 <td>@customer.IosAppsCount</td>
                 <td>@customer.ActiveSlotsCount</td>
                 <td>@customer.ProducOwner.FullName</td>
+                <td><a class="btn btn-sm btn-primary" asp-action="EditCustomer" asp-route-id="@customer.Id">Edit</a></td>
             </tr>
         }
     }
