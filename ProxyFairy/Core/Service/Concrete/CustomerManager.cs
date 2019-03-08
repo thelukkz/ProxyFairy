@@ -104,8 +104,8 @@ namespace ProxyFairy.Core.Service.Concrete
                 Name = dto.Name,
                 ProductOwner = new ProductOwnerDto
                 {
-                    Id = dto.ProductOwner != null ? dto.ProductOwner.Id : null,
-                    FullName = dto.ProductOwner != null ? dto.ProductOwner.UserName : null
+                    Id = dto?.ProductOwner?.Id ?? null,
+                    FullName = dto?.ProductOwner?.UserName ?? null
                 },
                 //TODO: add missing counters
             };
