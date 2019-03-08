@@ -66,15 +66,38 @@ namespace ProxyFairy.Controllers
 
             EditCustomerViewModel customerModel = new EditCustomerViewModel
             {
+                Id = id,
                 Name = dto.Name,
                 ProductOwnerId = dto?.ProductOwner?.Id ?? string.Empty
             };
 
-            //TODO: get all product owners and put into view bag
-
-            ViewBag.ProductOwners = SelectList()
+            //TODO: read choosen PO and push as selected to front
 
             return View(customerModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCustomer(EditCustomerViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var customer = (Customer)_manager.GetAll().Where(x => x.Id == viewModel.Id).FirstOrDefault();
+
+            if (customer != null)
+            {
+                customer.Name = viewModel.Name;
+                if (!string.IsNullOrEmpty(viewModel.ProductOwnerId))
+                {
+                    var newProductOwner = await _manager.GetProductOwnerAsync(viewModel.ProductOwnerId);
+                    if (newProductOwner != null) customer.ProductOwner = newProductOwner;
+                }
+
+                await _manager.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
