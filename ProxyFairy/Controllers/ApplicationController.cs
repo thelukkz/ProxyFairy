@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProxyFairy.Core.Model;
 using ProxyFairy.Core.Service.Abstract;
 using ProxyFairy.ViewModels.MobApp;
 
@@ -31,6 +32,28 @@ namespace ProxyFairy.Controllers
             }).ToList();
 
             return View(model);
+        }
+
+        public ViewResult CreateMobApp() => View(new CreateMobAppViewModel());
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateMobApp(CreateMobAppViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var newApp = new MobApp
+                {
+                    AppBundle = model.AppBundle,
+                    Name = model.Name,
+                    Platform = model.Platform
+                };
+                if (model.CustomerId > 0) newApp.CustomerId = model.CustomerId;
+
+                _mobAppsManager.Create(newApp);
+                await _mobAppsManager.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

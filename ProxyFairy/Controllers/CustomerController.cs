@@ -33,8 +33,8 @@ namespace ProxyFairy.Controllers
                 ActiveSlotsCount = x.ActiveSlotsCount,
                 ProducOwner = new ViewModels.Account.ProductOwnerViewModel
                 {
-                    Id = x.ProductOwner.Id,
-                    FullName = x.ProductOwner.FullName
+                    Id = x?.ProductOwner?.Id,
+                    FullName = x?.ProductOwner?.FullName
                 }
             }).ToList();
 

@@ -30,6 +30,7 @@ namespace ProxyFairy
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICustomerManager, CustomerManager>();
+            services.AddScoped<IMobAppsManager, MobAppsManager>();
 
 
             services.AddDbContext<AppIdentityDbContext>(options =>
