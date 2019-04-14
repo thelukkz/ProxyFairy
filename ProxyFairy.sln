@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyFairy", "ProxyFairy\ProxyFairy.csproj", "{269B327E-ADF9-4DD0-9BD4-651EC8300C33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyFairy", "ProxyFairy\ProxyFairy.csproj", "{269B327E-ADF9-4DD0-9BD4-651EC8300C33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyFairy.IntegrationTests", "ProxyFairy.IntegrationTests\ProxyFairy.IntegrationTests.csproj", "{CD31D87B-83ED-4A71-9C3E-A885F307498D}"
 EndProject
