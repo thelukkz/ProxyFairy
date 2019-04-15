@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProxyFairy.Core.Model;
 using ProxyFairy.Core.Service.Abstract;
 
 namespace ProxyFairy.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SlotController : Controller
     {
         private ISlotManager _manager;

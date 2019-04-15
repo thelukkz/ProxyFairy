@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProxyFairy.Core.Model;
 using ProxyFairy.Core.Service.Abstract;
@@ -7,6 +8,7 @@ using ProxyFairy.ViewModels.MobApp;
 
 namespace ProxyFairy.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ApplicationController : Controller
     {
         private IMobAppsManager _mobAppsManager;
