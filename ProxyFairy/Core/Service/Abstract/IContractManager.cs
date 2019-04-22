@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ProxyFairy.Core.Service.Dtos.Contract;
+using System.Threading.Tasks;
 
 namespace ProxyFairy.Core.Service.Abstract
 {
@@ -10,6 +11,6 @@ namespace ProxyFairy.Core.Service.Abstract
         void DeleteContract(long contractId);
         void RenewContractForNextMonth(long contractId);
         ContractDto GetCurrentContract(long slotId);
-        IEnumerable<ContractDto> GetAllContracts(long slotId);
+        Task<List<ContractDto>> GetAllContractsAsync(long slotId);
     }
 }

@@ -6,6 +6,9 @@ using ProxyFairy.Core.Repository.Abstract;
 using ProxyFairy.Core.Service.Abstract;
 using ProxyFairy.Core.Service.Dtos.Contract;
 using ProxyFairy.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System;
 
 namespace ProxyFairy.Core.Service.Concrete
 {
@@ -61,10 +64,21 @@ namespace ProxyFairy.Core.Service.Concrete
 
         public void CreateContract(ContractDto contractDto)
         {
-            if (IsSlotTaken(contractDto.SlotId, contractDto.Year, contractDto.Month))
+            if (IsSlotTaken(contractDto.SlotId.Value, contractDto.Year, contractDto.Month))
              throw new ContractAttachToSlotException();
 
-             
+            Contract contract = new Contract{
+                Year = contractDto.Year,
+                Month = contractDto.Month,
+                ServiceDesk = contractDto.ServiceDesk,
+                CreatedOn = DateTime.UtcNow
+            };
+
+            if (contractDto.MobAppId.HasValue) contract.MobAppId = contractDto.MobAppId.Value;
+            if (contractDto.SlotId.HasValue) contract.SlotId = contractDto.SlotId.Value;
+
+            _repository.Create<Contract>(contract);
+            SaveChanges();
         }
         
         private bool IsSlotAvailable(long slotId)
@@ -98,9 +112,19 @@ namespace ProxyFairy.Core.Service.Concrete
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ContractDto> GetAllContracts(long slotId)
+        public async Task<List<ContractDto>> GetAllContractsAsync(long slotId)
         {
-            throw new System.NotImplementedException();
+            return await _repository.All<Contract>()
+                .Where(x => x.SlotId == slotId)
+                .Select(x => new ContractDto{
+                    Id = x.Id,
+                    MobAppId = x.MobAppId,
+                    SlotId = x.SlotId,
+                    ServiceDesk = x.ServiceDesk,
+                    Month = x.Month,
+                    Year = x.Year
+                })
+                .ToListAsync();
         }
     }
 }
