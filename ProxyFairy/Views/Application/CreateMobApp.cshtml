@@ -1,0 +1,29 @@
+﻿@model CreateMobAppViewModel
+@addTagHelper ProxyFairy.Infrastructure.TagHelpers.SelectCustomerTagHelper, ProxyFairy
+
+<div class="bg-primary m-1 p-1 text-white"><h4>Create new mobile application</h4></div>
+<div asp-validation-summary=" All" class="text-danger"></div>
+<form asp-action="CreateMobApp" method="post" asp-antiforgery="true">
+    <div class="form-group">
+        <label asp-for="Name">Application name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="AppBundle">Application bundle</label>
+        <input asp-for="AppBundle" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Platform"></label>
+        <select class="form-control" asp-for="Platform" asp-items="Html.GetEnumSelectList<Platform>()">
+            <option disabled selected value="">Pick platform</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="CustomerId"></label>
+        <select class="form-control" model-for="CustomerId">
+            <option disabled selected value="">Pick customer</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

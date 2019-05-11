@@ -18,7 +18,7 @@ namespace ProxyFairy.Controllers
         private IUserValidator<AppUser> _userValidator;
         private IPasswordValidator<AppUser> _passwordValidator;
         private IPasswordHasher<AppUser> _passwordHasher;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public AdminController(UserManager<AppUser> userManager,
             IUserValidator<AppUser> userValidator,

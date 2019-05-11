@@ -1,0 +1,21 @@
+﻿@model EditCustomerViewModel
+@addTagHelper ProxyFairy.Infrastructure.TagHelpers.SelectUserTagHelper, ProxyFairy
+
+<div class="bg-primary m-1 p-1"><h4>Edit customer</h4></div>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="EditCustomer" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ProductOwnerId"></label>
+        <select class="form-control" model-for="ProductOwnerId">
+            <option disabled selected value="">Wybierz PO</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

@@ -1,4 +1,6 @@
-﻿using ProxyFairy.Core.Enums;
+﻿using System.Collections;
+using System.Collections.Generic;
+using ProxyFairy.Core.Enums;
 
 namespace ProxyFairy.Core.Model
 {
@@ -14,5 +16,8 @@ namespace ProxyFairy.Core.Model
         public string Message { get; set; }
         public string Exception { get; set; }
         public ResponseType? Response { get; set; }
+
+        public long? MobAppId { get; set; }
+        public virtual MobApp MobApp { get; set; }
     }
 }
